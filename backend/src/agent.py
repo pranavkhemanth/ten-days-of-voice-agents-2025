@@ -1,9 +1,13 @@
 import logging
+import os
+import json
 
 from dotenv import load_dotenv
 from livekit.agents import (
     Agent,
     AgentSession,
+    function_tool,
+    RunContext,
     JobContext,
     JobProcess,
     MetricsCollectedEvent,
@@ -12,6 +16,7 @@ from livekit.agents import (
     cli,
     metrics,
     tokenize,
+   
     # function_tool,
     # RunContext
 )
@@ -26,11 +31,58 @@ load_dotenv(".env.local")
 class Assistant(Agent):
     def __init__(self) -> None:
         super().__init__(
-            instructions="""You are a helpful voice AI assistant. The user is interacting with you via voice, even if you perceive the conversation as text.
-            You eagerly assist users with their questions by providing information from your extensive knowledge.
-            Your responses are concise, to the point, and without any complex formatting or punctuation including emojis, asterisks, or other symbols.
-            You are curious, friendly, and have a sense of humor.""",
+            instructions="""
+You are a friendly and  professional  barista at StarBucks.
+Your job is to take the user's coffee order using voice.
+
+You must fill the following order object:
+{
+  "drinkType": "",
+  "size": "",
+  "milk": "",
+  "extras": [],
+  "name": ""
+}
+
+• Ask questions until ALL fields are filled.
+• Suggest them extra that you have.
+• When the user mentions a detail, call the tool `update_order`.
+• Do NOT fill fields yourself — only update via tool.
+• After the order is complete, call the tool `finalize_order`.
+• Keep responses short and natural.
+"""
         )
+
+        
+        self.order = {
+            "drinkType": "",
+            "size": "",
+            "milk": "",
+            "extras": [],
+            "name": ""
+        }
+
+    #  Tool to update order field
+    @function_tool
+    async def update_order(self, context: RunContext, field: str, value: str):
+        if field == "extras":
+            self.order["extras"].append(value)
+        else:
+            self.order[field] = value
+
+        return f"Updated {field} to {value}."
+
+    #  Tool to save order to JSON
+    @function_tool
+    async def finalize_order(self, context: RunContext):
+        os.makedirs("orders", exist_ok=True)
+        filepath = "orders/order.json"
+
+        with open(filepath, "w") as f:
+            json.dump(self.order, f, indent=2)
+
+        return "Order saved!"
+
 
     # To add tools, use the @function_tool decorator.
     # Here's an example that adds a simple weather tool.
