@@ -1,0 +1,26 @@
+[
+    {
+        "id": "cyber_basics",
+        "title": "What is Cybersecurity?",
+        "summary": "Cybersecurity is the practice of protecting computers, networks, and data from unauthorized access, attacks, or damage.",
+        "sample_question": "What is the main goal of cybersecurity?"
+    },
+    {
+        "id": "passwords",
+        "title": "Strong Passwords",
+        "summary": "A strong password uses a mix of letters, numbers, and symbols. It is difficult to guess and helps secure accounts.",
+        "sample_question": "What makes a password strong?"
+    },
+    {
+        "id": "malware",
+        "title": "Malware",
+        "summary": "Malware is malicious software designed to harm or gain unauthorized access to a system. Examples include viruses, worms, and ransomware.",
+        "sample_question": "What is malware and can you name one type?"
+    },
+    {
+        "id": "phishing",
+        "title": "Phishing Attacks",
+        "summary": "Phishing is an attack where someone pretends to be a trusted source to trick users into giving personal information.",
+        "sample_question": "What is the goal of a phishing attack?"
+    }
+]
