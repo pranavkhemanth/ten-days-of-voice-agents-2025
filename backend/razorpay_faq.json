@@ -1,0 +1,31 @@
+{
+  "company_name": "Razorpay",
+  "description": "Razorpay is a leading payment solutions platform for businesses in India, enabling online payments, subscriptions, and payouts.",
+  "faq": [
+    {
+      "question": "What does Razorpay do?",
+      "answer": "Razorpay helps businesses accept, process, and disburse payments with its suite of payment solutions, including payment gateways, subscription billing, and payouts."
+    },
+    {
+      "question": "Do you have a free tier?",
+      "answer": "Yes, Razorpay offers a free sign-up with no setup fees. You only pay transaction fees when you start processing payments."
+    },
+    {
+      "question": "Who is Razorpay for?",
+      "answer": "Razorpay is designed for businesses of all sizes, from startups to enterprises, looking to accept online payments securely and efficiently."
+    },
+    {
+      "question": "What are your pricing plans?",
+      "answer": "Razorpay charges a transaction fee of 2% per transaction for domestic cards and net banking. Custom pricing is available for high-volume businesses."
+    },
+    {
+      "question": "How do I integrate Razorpay?",
+      "answer": "You can integrate Razorpay using our APIs, plugins for platforms like WooCommerce and Shopify, or our no-code checkout solutions."
+    }
+  ],
+  "pricing": {
+    "domestic_transactions": "2% per transaction",
+    "international_transactions": "3% per transaction",
+    "custom_pricing": "Available for enterprises with high transaction volumes."
+  }
+}
