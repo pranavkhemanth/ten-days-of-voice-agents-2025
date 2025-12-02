@@ -1,14 +1,10 @@
 'use client';
-
 import { useRef } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion } from 'framer-motion'; // Make sure you're using framer-motion, not motion/react
 import { useRoomContext } from '@livekit/components-react';
 import { useSession } from '@/components/app/session-provider';
 import { SessionView } from '@/components/app/session-view';
 import { WelcomeView } from '@/components/app/welcome-view';
-
-const MotionWelcomeView = motion.create(WelcomeView);
-const MotionSessionView = motion.create(SessionView);
 
 const VIEW_MOTION_PROPS = {
   variants: {
@@ -33,10 +29,8 @@ export function ViewController() {
   const isSessionActiveRef = useRef(false);
   const { appConfig, isSessionActive, startSession } = useSession();
 
-  // animation handler holds a reference to stale isSessionActive value
   isSessionActiveRef.current = isSessionActive;
 
-  // disconnect room after animation completes
   const handleAnimationComplete = () => {
     if (!isSessionActiveRef.current && room.state !== 'disconnected') {
       room.disconnect();
@@ -45,23 +39,18 @@ export function ViewController() {
 
   return (
     <AnimatePresence mode="wait">
-      {/* Welcome screen */}
       {!isSessionActive && (
-        <MotionWelcomeView
-          key="welcome"
-          {...VIEW_MOTION_PROPS}
-          startButtonText={appConfig.startButtonText}
-          onStartCall={startSession}
-        />
+        <motion.div key="welcome" {...VIEW_MOTION_PROPS}>
+          <WelcomeView
+            startButtonText={appConfig.startButtonText}
+            onStartCall={startSession}
+          />
+        </motion.div>
       )}
-      {/* Session view */}
       {isSessionActive && (
-        <MotionSessionView
-          key="session-view"
-          {...VIEW_MOTION_PROPS}
-          appConfig={appConfig}
-          onAnimationComplete={handleAnimationComplete}
-        />
+        <motion.div key="session-view" {...VIEW_MOTION_PROPS} onAnimationComplete={handleAnimationComplete}>
+          <SessionView appConfig={appConfig} />
+        </motion.div>
       )}
     </AnimatePresence>
   );
